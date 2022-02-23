@@ -1,4 +1,4 @@
-import logo from './logo.svg';
+import logo from './ci.png';
 import './App.css';
 
 function App() {
@@ -6,16 +6,19 @@ function App() {
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
+        <p className="title">
+          Sun* CI
+        </p>
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          Continuous Integration & Continuous Deployment
         </p>
         <a
           className="App-link"
-          href="https://reactjs.org"
+          href="https://ci.sun-asterisk.com/docs/introduction/"
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn React
+          Get Started
         </a>
       </header>
     </div>
