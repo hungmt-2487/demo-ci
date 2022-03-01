@@ -2,6 +2,8 @@ import logo from './ci.png';
 import './App.css';
 
 function App() {
+  console.log("Test xem ci chay khong, neu chay thi bi loi o day");
+  
   return (
     <div className="App">
       <header className="App-header">
