@@ -1,0 +1,31 @@
+workspace: true
+
+stages:
+  - install
+  - test
+  - build
+  - deploy
+
+jobs:
+  - name: Install dependencies
+    stage: install
+    image: node:14-alpine
+    only:
+      branches:
+        - develop
+    cache:
+      - key: node_modules_$CI_BRANCH
+        paths:
+          - node_modules
+    script:
+      - yarn install
+  - name: Check code
+    stage: test
+    image: node:14-alpine
+    only:
+      branches:
+        - develop
+    script:
+      - yarn run lint
+      - yarn run type-check
+      - yarn run test
