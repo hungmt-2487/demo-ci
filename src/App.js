@@ -15,8 +15,7 @@ function App() {
           className="App-link"
           href="https://ci.sun-asterisk.com/docs/introduction/"
           target="_blank"
-          rel="noopener noreferrer"
-        >
+          rel="noopener noreferrer">
           Get Started
         </a>
       </header>
