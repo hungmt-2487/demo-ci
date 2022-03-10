@@ -2,34 +2,41 @@
 
 echo ========Deploy FE script==========
 
-echo Create new folder realease: 
+echo Create new realease tag: 
 
-read folder
+read realease_tag
 
 echo Target branch:
 
+//staging or master
 read branch
 
 echo Current realease symlink:
 
 read link
 
-cp -R ~/Desktop/Demo/realeases/realease_v4 ~/Desktop/Demo/realeases/$folder
+//clone old-realease-folder to new folder
+cp -R ~/realease/old-realease-folder ~/realease/$realease_tag
 
-cd ~/Desktop/Demo/realeases/$folder
+cd ~/realease/$realease_tag
 
 git checkout $branch
 
-git pull hungmt $branch || exit 0
+//fail => exit
+git pull origin $branch || exit 0
 
 yarn 
 
+//fail => exit
 yarn build || exit 0
 
-unlink ~/Desktop/Demo/current/$link
+//romove old symlink
+unlink ~/current/$link
 
-ln -s ~/Desktop/Demo/realeases/$folder ~/Desktop/Demo/current/$folder 
+//create new symlink
+ln -s ~/realease/$realease_tag ~/current/$realease_tag 
 
-# cd ~/Desktop/Demo/current/$folder
+//cd to symlink
+# cd ~/current/$realease_tag
 
 # pm2 restart
