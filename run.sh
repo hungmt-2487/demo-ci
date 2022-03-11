@@ -1,42 +1,54 @@
 #!/bin/sh
 
-echo ========Deploy FE script==========
+# Get current date
+date=$(date +'%y.%m.%d')
 
-echo Create new realease tag: 
+# Get latest release version
+latest_release=$(ls -t ~/releases | head -1)
 
-read realease_tag
+# Get current symlink
+current_symlink=$(ls -t ~/current | head -1)
 
-echo Target branch:
+echo Create new release tag: 
 
-//staging or master
-read branch
+read release_tag
 
-echo Current realease symlink:
+# echo Target branch:
 
-read link
+# //staging or master
+# read branch
 
-//clone old-realease-folder to new folder
-cp -R ~/realease/old-realease-folder ~/realease/$realease_tag
+# New release folder
+# e.g Release_22.03.10_v22.03.09.10.00
+new_release=Release_$date_$release_tag
 
-cd ~/realease/$realease_tag
+# clone latest release to new release
+cp -R ~/releases/$latest_release ~/releases/$new_release
+
+cd ~/releases/$new_release
 
 git checkout $branch
 
-//fail => exit
+# fail => exit
 git pull origin $branch || exit 0
 
+# yarn install
 yarn 
 
-//fail => exit
+# fail => exit
 yarn build || exit 0
 
-//romove old symlink
-unlink ~/current/$link
+# Create new symlink
+ln -s ~/releases/$new_release ~/current/$new_release 
 
-//create new symlink
-ln -s ~/realease/$realease_tag ~/current/$realease_tag 
+cd ~/current/$new_release
 
-//cd to symlink
-# cd ~/current/$realease_tag
+pm2 restart
 
-# pm2 restart
+# Remove old symlink
+unlink ~/current/$current_symlink
+
+cd ~/releases
+
+# Keep latest 5 release version
+ls -dt */ | tail -n +6 | xargs rm -rf
